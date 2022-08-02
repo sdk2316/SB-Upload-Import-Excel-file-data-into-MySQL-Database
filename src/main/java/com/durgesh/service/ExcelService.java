@@ -39,6 +39,18 @@ public class ExcelService {
     }
   }
   
+//Delete
+public boolean deleteAll(List<Tutorial> ids) {
+
+    try {
+        repository.deleteAll(ids);
+        return true;
+    } catch (Exception e) {
+        return false;
+    }
+}
+  
+ 
   
  //get all
   public List<Tutorial> getAllTutorials() {
