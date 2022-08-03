@@ -39,7 +39,7 @@ public class ExcelController {
     if (ExcelHelper.hasExcelFormat(file)) {
       try {
         fileService.save(file);
-        message = "Uploaded the file successfully: " + file.getOriginalFilename();
+        message = " file record uploaded successfully: " + file.getOriginalFilename();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
       } catch (Exception e) {
         message = "Could not upload the file: " + file.getOriginalFilename() + "!";
@@ -57,7 +57,7 @@ public class ExcelController {
     if (ExcelHelper.hasExcelFormat(file)) {
       try {
         fileService.update(file);
-        message = "Uploaded the file successfully: " + file.getOriginalFilename();
+        message = " file record updated successfully: " + file.getOriginalFilename();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
       } catch (Exception e) {
         message = "Could not upload the file: " + file.getOriginalFilename() + "!";
@@ -109,5 +109,26 @@ public class ExcelController {
     } catch (Exception e) {
       return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+  
+  
+  
+  
+//Bulk Delete
+  @DeleteMapping(value="/bulkDelete")
+  public ResponseEntity<ResponseMessage> bulkDelete(@RequestParam("file") MultipartFile file) {
+    String message = "";
+    if (ExcelHelper.hasExcelFormat(file)) {
+      try {
+        fileService.bulkDelete(file);
+        message = " file record deleted successfully: " + file.getOriginalFilename();
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+      } catch (Exception e) {
+        message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+      }
+    }
+    message = "Please upload an excel file!";
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
   }
 }

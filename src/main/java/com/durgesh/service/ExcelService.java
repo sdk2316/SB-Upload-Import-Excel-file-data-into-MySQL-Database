@@ -39,6 +39,18 @@ public class ExcelService {
     }
   }
   
+  
+  
+  // Delete excel
+  public void bulkDelete(MultipartFile file) {
+    try {
+      List<Tutorial> tutorials = ExcelHelper.excelToTutorialsDelete(file.getInputStream());
+      repository.deleteAll(tutorials);
+    } catch (IOException e) {
+      throw new RuntimeException("fail to store excel data: " + e.getMessage());
+    }
+  }
+  
 //Delete
 public boolean deleteAll(List<Tutorial> ids) {
 
